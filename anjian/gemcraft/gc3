@@ -1,0 +1,516 @@
+Dim x_Gem(9)
+Dim y_Gem(9)
+Dim x_fightflag(9)
+Dim y_fightflag(9)
+For i = 0 To 2
+	For j = 0 To 2
+		x_Gem(3 * i + j) = 1860 + 70 * j
+		y_Gem(i + 3 * j) = 1170 + 70 * j
+		x_fightflag(3 * i + j) = 550 + 300 * j
+		y_fightflag(i + 3 * j) = 600 + 200 * j
+	Next
+Next
+
+
+Dim y_wave(5)
+x_wave=130
+For i = 0 To 4
+	y_wave(i) = 259 + 240 * i
+Next
+
+x_startbattle = 1200
+y_startbattle = 1200
+x_backtomap = 1800
+y_backtomap = 1300
+
+//0 orange, 1 yeloow, 2 white, 3 red, 6 black, 7 blue
+//blue orange
+//Call CombineALevel3Gem(0, 2, 3, 7)
+//yellow
+//Call CombineALevel3Gem(1, 1, 2, 3)
+//yellow orange
+//Call CombineALevel3Gem(0, 1, 2, 3)
+
+x_level1 = 1990
+y_level1 = 1070
+
+
+
+
+
+
+map_x_min = 171
+map_y_min = 171
+map_x_max = 1805
+map_y_max = 1360
+map_gap = 75
+map_x_num = 22
+map_y_num = 16
+
+Function MoveToGem(i)
+	MoveTo x_Gem(i),y_Gem(i)
+End Function
+
+Function MoveToFightFlag(i)
+	MoveTo x_fightflag(i),y_fightflag(i)
+End Function
+
+Function StartBattle
+	MoveTo x_startbattle,y_startbattle
+	Delay 10
+	RightClick 1
+	Delay 8000
+End Function
+
+Function BackToMap
+	MoveTo x_backtomap, y_backtomap
+	Delay 10
+	RightClick 1
+	Delay 3000
+End Function
+
+Function SetUpAllFightFlag
+For i = 0 To 8
+
+MovetoFightFlag (i)
+Delay 10
+RightClick 8
+Delay 10
+	
+Next	
+End Function
+
+
+
+Function CreateALevel1Gem(i)
+	Call MoveToGem(i)
+	Delay 10
+	RightClick 1
+	Delay 10
+	MoveTo x_level1,y_level1
+	Delay 10
+	RightClick 1
+	Delay 10
+End Function
+
+Function CombineALevel3Gem(a, b, c, d)
+	CreateALevel1Gem (a)
+	CreateALevel1Gem (b)
+	CreateALevel1Gem (c)
+	CreateALevel1Gem (d)
+	KeyDown "Shift", 1
+	Delay 10
+	KeyPress "G", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyPress "G", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyUp "Shift", 1
+	Delay 10
+End Function
+
+
+
+Function MoveToWave(i)
+	MoveTo x_wave,y_wave(i)
+End Function
+Function GoToEnd
+	Call MoveToWave (1)
+	Delay 10
+	KeyDown "Ctrl", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyUp "Ctrl", 1
+	Delay 10
+End Function
+
+Function BulidTowerOn(i, j)
+	MoveTo map_x_min + (i + 0.5) * map_gap,map_y_min + (i + 0.5) * map_gap
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+End Function
+Function BuildTowerOnAllMap
+	For i = 0 To map_x_num - 1
+		For j = 0 to map_y_num -1
+			Call BuildTowerOn(i,j)
+		Next
+	Next	
+End Function
+
+
+Function BuildAmplifierOn(i,j)
+	MoveTo map_x_min + (i + 0.5) * map_gap,map_y_min + (i + 0.5) * map_gap
+	Delay 10
+	KeyPress "A", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+End Function
+
+Function BulidAmplifierAndSetAYellowGemOn(x, y)
+	CreateALevel1Gem (1)
+	Delay 10
+	MoveTo x,y
+	Delay 10
+	KeyPress "A", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	RightClick 1
+	Delay 10
+End Function
+
+Function NormalField
+	GetCursorPos Curse_x, Curse_y
+	Delay 10
+
+	Call CombineALevel3Gem(0, 1, 2, 3)
+	Delay 10	
+	MoveTo Curse_x, Curse_y
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyPress "U",5
+	Delay 10
+	
+	KeyDown "Shift", 1
+	Delay 10
+	RightClick 5
+	Delay 10
+	KeyUp "Shift", 1
+	
+	KeyPress "q",3
+	Delay 10
+	Call GoToEnd
+	Delay 10
+	
+	call CreateALevel1Gem(1)
+	Delay 10
+	MoveTo Curse_x+map_gap, Curse_y+map_gap
+	Delay 10
+	KeyPress "A", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	
+	call CreateALevel1Gem(1)
+	Delay 10
+	MoveTo Curse_x+map_gap, Curse_y
+	Delay 10
+	KeyPress "A", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	
+	call CreateALevel1Gem(1)
+	Delay 10
+	MoveTo Curse_x+map_gap, Curse_y-map_gap
+	Delay 10
+	KeyPress "A", 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	RightClick 1
+	Delay 10
+	
+	
+	MoveTo Curse_x, Curse_y
+	Delay 10
+	
+	For i = 0 To 10
+		Delay 3000
+		KeyPress "U", 2
+		Delay 10
+		KeyPress "4", 1
+		Delay 10
+	Next
+	
+End Function
+
+
+//MoveTo map_x_max-map_gap,map_y_max-map_gap
+//	Call ComineALevel3Gem(0, 1, 2, 3)
+//	GetCursorPos Curse_x, Curse_y
+//	MoveTo 200, 200
+//	Delay 100
+//
+
+Function X4fortalisman
+	
+	
+	MoveTo 1070, 700
+	Delay 10
+	RightClick 1
+	Delay 1000
+	
+	MoveTo 1300, 470
+	Delay 10
+	RightClick 1
+	Delay 10
+	
+	
+MoveTo 1470, 340
+Delay 10
+RightClick 7
+
+//	MoveToFightFlag (8)
+//	Delay 10
+//	RightClick 8
+	SetUpAllFightFlag
+	Delay 100
+	StartBattle 
+	Delay 1000
+	
+	MoveTo 1000, 600
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	
+	MoveTo 1200, 770
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	
+	x_tower = 930
+	y_tower = 830
+	BulidAmplifierAndSetAYellowGemOn x_tower - map_gap, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower + map_gap, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower + map_gap, y_tower
+	BulidAmplifierAndSetAYellowGemOn x_tower, y_tower - map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower - map_gap, y_tower - map_gap
+		
+	
+	Call CombineALevel3Gem(0, 1, 2, 3)
+	MoveTo x_tower, y_tower
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	RightClick 1
+	Delay 10	
+	KeyPress "U", 5
+	Delay 10
+	KeyDown "Shift", 1
+	Delay 10
+	RightClick 5
+	Delay 10
+	KeyUp "Shift", 1
+	
+	x_trap = 540
+	y_trap = 760
+	Call CombineALevel3Gem(0, 2, 3, 7)
+	Delay 10
+	MoveTo x_trap, y_trap
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyPress "U", 5
+	Delay 10
+	
+	KeyPress "q",3
+	Delay 10
+	Call GoToEnd
+	Delay 10
+//30
+	//40
+	For i = 0 To 40
+		Delay 2000
+		MoveTo x_trap, y_trap
+		Delay 10
+		KeyPress "U", 1
+		Delay 10
+		KeyPress "4", 1
+		Delay 10
+		Delay 2000
+		MoveTo x_tower, y_tower
+		Delay 10
+		KeyPress "U", 1
+		Delay 10
+		KeyPress "5", 1
+		Delay 10
+		RightDown 1
+		Delay 10
+		MoveTo x_tower + 5, y_tower
+		Delay 2000
+		MoveTo x_tower, y_tower
+		Delay 10
+		RightUp 1
+		Delay 10
+		
+	Next
+End Function
+
+Function X4forSC
+	
+	
+	MoveTo 1070, 700
+	Delay 10
+	RightClick 1
+	Delay 1000
+	
+	MoveTo 1300, 470
+	Delay 10
+	RightClick 1
+	Delay 10
+	
+	
+
+	MoveToFightFlag (8)
+	Delay 10
+	RightClick 8
+	Delay 100
+	StartBattle 
+	Delay 1000
+	
+	MoveTo 1000, 600
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	
+	MoveTo 1200, 770
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	
+	x_tower = 930
+	y_tower = 830
+	BulidAmplifierAndSetAYellowGemOn x_tower - map_gap, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower + map_gap, y_tower + map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower + map_gap, y_tower
+	BulidAmplifierAndSetAYellowGemOn x_tower, y_tower - map_gap
+	BulidAmplifierAndSetAYellowGemOn x_tower - map_gap, y_tower - map_gap
+		
+	
+	Call CombineALevel3Gem(0, 1, 2, 3)
+	MoveTo x_tower, y_tower
+	Delay 10
+	KeyPress "T", 1
+	Delay 10
+	RightClick 1
+	Delay 10	
+	RightClick 1
+	Delay 10	
+	KeyPress "U", 5
+	Delay 10
+	KeyDown "Shift", 1
+	Delay 10
+	RightClick 5
+	Delay 10
+	KeyUp "Shift", 1
+	
+	x_trap = 540
+	y_trap = 760
+	Call CombineALevel3Gem(0, 2, 3, 7)
+	Delay 10
+	MoveTo x_trap, y_trap
+	Delay 10
+	RightClick 1
+	Delay 10
+	KeyPress "U", 5
+	Delay 10
+	
+	KeyPress "q",3
+	Delay 10
+	Call GoToEnd
+	Delay 10
+
+	For i = 0 To 30
+		Delay 2000
+		MoveTo x_trap, y_trap
+		Delay 10
+		KeyPress "U", 1
+		Delay 10
+		KeyPress "4", 1
+		Delay 10
+		Delay 2000
+		MoveTo x_tower, y_tower
+		Delay 10
+		KeyPress "U", 1
+		Delay 10
+		KeyPress "5", 1
+		Delay 10		
+	Next
+End Function
+
+
+Function BombWave0(i)
+
+	KeyPress "B", 1
+	Delay 10
+	MoveToWave (0)
+
+	Delay 10
+	KeyDown "Shift", 1
+	Delay 10
+	RightClick i
+	Delay 10
+	KeyUp "Shift", 1
+	Delay 10
+	KeyPress "B", 1
+	Delay 100
+	
+	
+End Function
+
+
+Delay 300
+X4fortalisman
+
+//BombWave0(10)
+
+
+/*
+For i = 0 To 100
+
+Call X4forSC
+BackToMap 
+Delay 2000
+Next
+
+
+For k=0 to 100
+	
+	movetowave (1)
+	Keypress "b", 1
+	Delay 10
+	KeyDown "shift", 1
+	Delay 10
+	RightClick 70
+	Delay 10
+	KeyUp "shift", 1
+	Delay 10
+	KeyPress "b", 1
+	Delay 10
+	Delay 1000
+	rightcick 1
+	Delay 10
+	
+Next
+	
+	*/
